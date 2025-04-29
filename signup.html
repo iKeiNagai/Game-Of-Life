@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>Signup</h2>
-    <form action="" method="POST" onsubmit="return validate()">
+    <form action="signup.php" method="POST" onsubmit="return validate()">
         <input type="text" id="username" name="username" placeholder="Username"><br>
         <input type="email" id="email" name="email" placeholder="Email"><br>
         <input type="password" id="password" name="password" placeholder="Password"><br>
@@ -36,7 +36,18 @@
                 return false;
             }
 
+            document.getElementById("msg").textContent = "";
             return true;
+        }
+
+        //check for confirmation msg from php file
+        window.onload = function(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const msg = urlParams.get("msg");
+
+            if(msg){
+                document.getElementById("msg").innerHTML = decodeURIComponent(msg);
+            }
         }
     </script>
 </body>
