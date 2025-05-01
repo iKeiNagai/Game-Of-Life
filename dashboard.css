@@ -1,0 +1,65 @@
+/* Reset some basics */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2rem;
+    color: #2c3e50;
+}
+
+.dashboard {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 30px 40px;
+    text-align: center;
+}
+
+.dashboard p {
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+
+button {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    margin: 15px 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+a {
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+    .dashboard {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
