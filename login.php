@@ -16,7 +16,11 @@ if($result-> num_rows == 1){
     $user = $result->fetch_assoc(); //turns results into arr
     
     if($password == $user['password']) {
-        header("Location: game.html");
+        session_start();
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['email'] = $user['email'];
+        header("Location: game.php");
         exit();
     } else {
         $msg = "<p style='color:red'>Incorrect password</p>";
