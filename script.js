@@ -4,6 +4,9 @@ let grid = [];
 let interval = null;
 
 const gridContainer = document.getElementById("grid-container");
+let generation = 0;
+const generationCounter = document.getElementById("generationCounter");
+
 
 function createGrid() {
   gridContainer.innerHTML = "";
@@ -49,6 +52,8 @@ function getNeighbors(r, c) {
 
 function nextGeneration() {
   const next = grid.map(arr => [...arr]);
+  generation++;
+  generationCounter.textContent = `Generation: ${generation}`;
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -89,6 +94,10 @@ function stopGame() {
 
 function resetGrid() {
   stopGame();
+
+  generation = 0;
+  generationCounter.textContent = `Generation: 0`;
+
   createGrid();
 }
 

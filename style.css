@@ -53,4 +53,8 @@ body {
     background-color: #d3d3d3a2;
     height: fit-content;
   }
+
+  #generationCounter {
+    text-align: center;
+  }
   
