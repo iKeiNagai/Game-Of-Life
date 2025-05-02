@@ -43,80 +43,86 @@ if (isset($_POST['update_pattern'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <style>
-        table, th, td { 
-            border: 1px solid black; 
-            border-collapse: collapse; 
-            padding: 8px; 
-        }
-    </style>
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-    <h2>Users</h2>
-    <button onclick="window.location.href='?sort=games';">Sort by Most Games</button>
-    <button onclick="window.location.href='?';">Sort by UserID</button>
-    <table>
-        <tr>
-            <th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Games</th><th>Action</th>
-        </tr>
-        <?php while($user = mysqli_fetch_assoc($users)): ?>
+    <div class="navbar">
+        <span><?php echo "Role: " . $_SESSION['role']; ?></span>
+        <?php if($_SESSION['role'] === 'admin') : ?>
+            <button onclick="window.location.href='admin.php'">Manage Users</button>
+        <?php endif; ?>
+        <button onclick="window.location.href='dashboard.php'">Dashboard</button>
+        <button onclick="window.location.href='game.php'">Game</button>
+        <button onclick="window.location.href='change_role.php'">Change role</button>
+        <button onclick="window.location.href='logout.php'">Logout</button>
+    </div>
+    
+    <div class="container">
+        <h2>Users</h2>
+        <button onclick="window.location.href='?sort=games';">Sort by Most Games</button>
+        <button onclick="window.location.href='?';">Sort by UserID</button>
+        <table>
             <tr>
-                <td><?= $user['id'] ?></td>
-                <td><?= htmlspecialchars($user['username']) ?></td>
-                <td><?= htmlspecialchars($user['email']) ?></td>
-                <td><?= $user['role'] ?></td>
-                <td><?= $user['game_count'] ?></td>
-                <td>
-                    <?php if ( $currentUser != $user['id']): ?>
+                <th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Games</th><th>Action</th>
+            </tr>
+            <?php while($user = mysqli_fetch_assoc($users)): ?>
+                <tr>
+                    <td><?= $user['id'] ?></td>
+                    <td><?= htmlspecialchars($user['username']) ?></td>
+                    <td><?= htmlspecialchars($user['email']) ?></td>
+                    <td><?= $user['role'] ?></td>
+                    <td><?= $user['game_count'] ?></td>
+                    <td>
+                        <?php if ( $currentUser != $user['id']): ?>
+                            <form method="POST">
+                                <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                                <button name="delete_user" onclick="return confirm('Delete user?')">Delete</button>
+                            </form>
+                        <?php endif;?>
+                    </td>
+                </tr>
+
+                <?php
+                    $sql = "
+                        SELECT * FROM game_sessions 
+                        WHERE user_id = {$user['id']}";
+                    $sessions = mysqli_query($conn,$sql);
+
+                    if (mysqli_num_rows($sessions) > 0):
+                        while($session = mysqli_fetch_assoc($sessions)):
+                ?>
+                
+                <tr>
+                    <td colspan="4" class="session"> 
+                        <b> Pattern:</b> <span id="pattern-name-<?= $session['id'] ?>" > <?= $session['pattern_name'] ?></span>
+
+                        <b> Status: </b> <?= $session['status'] ?>
+                        <b> Gen: </b> <?= $session['generation_count'] ?>
+                    </td>
+                    <td>
+                        Start:<span class="format-datetime" data-datetime="<?= $session['created_at'] ?>"></span><br> 
+                        End:<span class="format-datetime" data-datetime="<?= $session['ended_at'] ?>"></span>
+                    </td>
+                    <td>
                         <form method="POST">
-                            <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                            <button name="delete_user" onclick="return confirm('Delete user?')">Delete</button>
+                            <input type="hidden" name="session_id" value="<?= $session['id'] ?>">
+                            <button name="delete_session" onclick="return confirm('Delete session?')">Delete</button>
                         </form>
-                    <?php endif;?>
-                </td>
-            </tr>
 
-            <?php
-                $sql = "
-                    SELECT * FROM game_sessions 
-                    WHERE user_id = {$user['id']}";
-                $sessions = mysqli_query($conn,$sql);
+                        <button onclick="updatePattern(<?= $session['id'] ?>)">Update</button>
+                        <form id="update-form-<?= $session['id'] ?>" method="POST" style="display:none;">
+                            <input type="hidden" name="session_id" value="<?= $session['id'] ?>">
+                            <input type="hidden" name="pattern_name" id="pattern-input-<?= $session['id'] ?>">
+                            <input type="hidden" name="update_pattern" value="1">
+                        </form>
+                    </td>
+                </tr>
 
-                if (mysqli_num_rows($sessions) > 0):
-                    while($session = mysqli_fetch_assoc($sessions)):
-            ?>
-            
-            <tr>
-                <td colspan="4"> 
-                    Pattern: <span id="pattern-name-<?= $session['id'] ?>" > <?= $session['pattern_name'] ?></span>
+                <?php endwhile; endif;?>
 
-                    Status: <?= $session['status'] ?>
-                    Gen: <?= $session['generation_count'] ?>
-                </td>
-                <td>
-                    Start:<span class="format-datetime" data-datetime="<?= $session['created_at'] ?>"></span><br> 
-                    End:<span class="format-datetime" data-datetime="<?= $session['ended_at'] ?>"></span>
-                </td>
-                <td>
-                    <form method="POST">
-                        <input type="hidden" name="session_id" value="<?= $session['id'] ?>">
-                        <button name="delete_session" onclick="return confirm('Delete session?')">Delete</button>
-                    </form>
-
-                    <button onclick="updatePattern(<?= $session['id'] ?>)">Update</button>
-                    <form id="update-form-<?= $session['id'] ?>" method="POST" style="display:none;">
-                        <input type="hidden" name="session_id" value="<?= $session['id'] ?>">
-                        <input type="hidden" name="pattern_name" id="pattern-input-<?= $session['id'] ?>">
-                        <input type="hidden" name="update_pattern" value="1">
-                    </form>
-                </td>
-            </tr>
-
-            <?php endwhile; endif;?>
-
-        <?php endwhile;?>
-    </table>
-
+            <?php endwhile;?>
+        </table>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
         const formatDates = document.querySelectorAll('.format-datetime');
