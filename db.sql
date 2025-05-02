@@ -20,4 +20,5 @@ CREATE TABLE game_sessions (
     ended_at VARCHAR(30),
     user_id INT,
     FOREIGN KEY(user_id) REFERENCES users(id)
+    ON DELETE CASCADE
 );

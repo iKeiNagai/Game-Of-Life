@@ -2,6 +2,7 @@
 session_start();
 require_once 'db.php';
 
+$currentUser = $_SESSION['user_id'];
 $orderByGames = isset($_GET['sort']) && $_GET['sort'] === 'games' ? 'ORDER BY game_count DESC' : '';
 
 //query users
@@ -13,6 +14,14 @@ $query = "
     $orderByGames
 ";
 $users = mysqli_query($conn, $query);
+
+
+//delete user
+if(isset($_POST['delete_user'])){
+    $userId = (int)$_POST['user_id'];
+    $sql = "DELETE FROM users WHERE id = $userId";
+    mysqli_query($conn, $sql);
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +53,16 @@ $users = mysqli_query($conn, $query);
                 <td><?= htmlspecialchars($user['email']) ?></td>
                 <td><?= $user['role'] ?></td>
                 <td><?= $user['game_count'] ?></td>
-                <td>Delete</td>
+                <td>
+                    <?php if ( $currentUser != $user['id']): ?>
+                        <form method="POST">
+                            <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                            <button name="delete_user" onclick="return confirm('Delete user?')">Delete</button>
+                        </form>
+                    <?php endif;?>
+                </td>
             </tr>
-            
+
             <?php
                 $sql = "
                     SELECT * FROM game_sessions 
