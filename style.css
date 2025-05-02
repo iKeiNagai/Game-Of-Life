@@ -1,60 +1,78 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
-    background-color: #f4f4f4;
-  }
-  
-  .title {
-    width: 100%;
-    text-align: center;
-    font-size: 2rem;
-    margin-top: 1rem;
-    color: #333;
-  }
-  
-  #gamecontainer {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  
-  #grid-container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 600px;
-    height: 600px;
-    border: 2px solid #333;
-    background-color: white;
-  }
-  
-  .cell {
-    box-sizing: border-box;
-    width: calc(600px / 15);
-    height: calc(600px / 15);
-    border: 1px solid #ddd;
-    background-color: #eee;
-  }
-  
-  .cell.alive {
-    background-color: #3498db;
-  }
-  
-  .box {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    border: 2px solid #333;
-    background-color: #d3d3d3a2;
-    height: fit-content;
-  }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
 
-  #generationCounter {
-    text-align: center;
-  }
-  
+.title {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 1rem;
+  color: #333;
+}
+
+#gamecontainer {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+#grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 600px;
+  height: 600px;
+  border: 2px solid #333;
+  background-color: white;
+}
+
+.cell {
+  box-sizing: border-box;
+  width: calc(600px / 15);
+  height: calc(600px / 15);
+  border: 1px solid #ddd;
+  background-color: #eee;
+}
+
+.cell.alive {
+  background-color: #3498db;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid #333;
+  background-color: #d3d3d3a2;
+  height: fit-content;
+}
+
+#generationCounter {
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: 1px solid #757575;
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #616161;
+  color: white;
+  transform: scale(1.05);
+}
+

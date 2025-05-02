@@ -4,18 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="signup.css">
 </head>
 <body>
-    <h2>Login</h2>
-    <form action="login.php" method="POST" onsubmit="return validate()">
-        <input type="text" id="username" name="username" placeholder="Username"><br>
-        <input type="password" id="password" name="password" placeholder="Password"><br>
-        <button type="submit">Login</button>
-        <div id="msg"></div>
-    </form>
+    <div class="container">
+        <header>
+            <h1>The Game of Life</h1>
+        </header>
+
+        <h2>Login</h2>
+
+        <form action="login.php" method="POST" onsubmit="return validate()">
+            <input type="text" id="username" name="username" placeholder="Username"><br><br>
+            <input type="password" id="password" name="password" placeholder="Password"><br><br>
+            <button type="submit">Login</button>
+            <div id="msg"></div>
+        </form>
+
+        <br>
+        <a href="home.html" class="back-link">Back to Home</a>
+    </div>
 
     <script>
-        //validate form
         function validate(){
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value.trim();
@@ -28,7 +38,6 @@
             return true;
         }
 
-        //checks for msg from php
         window.onload = function(){
             const urlParams = new URLSearchParams(window.location.search);
             const msg = urlParams.get("msg");
@@ -37,7 +46,6 @@
                 document.getElementById("msg").innerHTML = decodeURIComponent(msg);
             }
         }
-
     </script>
 </body>
 </html>

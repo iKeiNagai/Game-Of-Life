@@ -1,12 +1,11 @@
 <?php
 
 $host = "localhost";
-$user = "your_username";
-$pass = "your_username";
-$dbname = "your_username";
+$user = "root";
+$pass = "";
+$dbname = "lifegame";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

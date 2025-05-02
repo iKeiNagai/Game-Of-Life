@@ -2,22 +2,18 @@
 session_start();
 require_once 'db.php';
 
-//check if valid session
 if (!isset($_SESSION['user_id'])) {
   header("Location: login.php");
   exit();
 }
 
-//handles post request
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-  $data = json_decode(file_get_contents("php://input"), true); //handles raw data to arr
+  $data = json_decode(file_get_contents("php://input"), true); 
   if (!$data) exit();
 
-  //debug
   header('Content-Type: application/json');
   echo json_encode(['received' => $data]);
 
-  //prepare statement
   $sql = "INSERT INTO game_sessions (pattern_name, status, generation_count, created_at, ended_at, user_id) VALUES (?, ?, ?, ?, ?, ?)";
   $statement = $conn->prepare($sql);
   $statement->bind_param("ssissi",

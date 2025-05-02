@@ -5,7 +5,6 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $msg = "";
 
-//prepare,execute and get results
 $sql = "SELECT * FROM users WHERE username = ?";
 $statement = $conn->prepare($sql);
 $statement->bind_param("s",$username);
@@ -13,7 +12,7 @@ $statement->execute();
 $result = $statement->get_result();
 
 if($result-> num_rows == 1){
-    $user = $result->fetch_assoc(); //turns results into arr
+    $user = $result->fetch_assoc(); 
     
     if($password == $user['password']) {
         session_start();
