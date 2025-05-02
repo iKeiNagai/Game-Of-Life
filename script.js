@@ -4,6 +4,10 @@ let grid = [];
 let interval = null;
 
 const gridContainer = document.getElementById("grid-container");
+let generation = 0;
+const generationCounter = document.getElementById("generationCounter");
+
+let startTime = new Date();
 
 function createGrid() {
   gridContainer.innerHTML = "";
@@ -49,6 +53,8 @@ function getNeighbors(r, c) {
 
 function nextGeneration() {
   const next = grid.map(arr => [...arr]);
+  generation++;
+  generationCounter.textContent = `Generation: ${generation}`;
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -89,6 +95,10 @@ function stopGame() {
 
 function resetGrid() {
   stopGame();
+  startTime = new Date();
+  generation = 0;
+  generationCounter.textContent = `Generation: 0`;
+
   createGrid();
 }
 
@@ -127,4 +137,40 @@ function loadPattern() {
       if (cell) cell.classList.add("alive");
     }
   });
+}
+
+function saveGame(){
+  const pattern_name = prompt("Enter a pattern name:")
+  if(!pattern_name) return;
+
+  const status = isGridDead() ? "died" : "succeeded"; 
+  const endTime = new Date();
+
+  const data = {
+    pattern_name,
+    status,
+    generation_count: generation,
+    created_at: startTime.toISOString(),
+    ended_at: endTime.toISOString()
+  };
+
+  //send data with post to game.php
+  fetch('game.php', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())//debug
+  .then(result => {
+    console.log("Server response:", result); //debug
+    alert("Game Saved!");
+  })
+  .catch(error => console.error("Error:",error))
+}
+
+
+function isGridDead() {
+  return grid.flat().every(cell => cell === 0);
 }

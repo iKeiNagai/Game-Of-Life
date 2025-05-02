@@ -1,38 +1,25 @@
 <?php
-$host = "localhost";
-$user = "your_username";
-$pass = "your_username";
-$dbname = "your_username";
+require_once 'db.php'; // Include database connection file
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+// Get POST data
 $username = $_POST['username'];
 $email = $_POST['email'];
-$password = $_POST['password'];
+$password = $_POST['password'];  // No hashing
 
-try{
-    //prepares and executes query
-    $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    $statement = $conn->prepare($sql);
-    $statement->bind_param("sss", $username, $email, $password);
-    $statement->execute();
+// Prepare and execute SQL query to insert data into users table
+$sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sss", $username, $email, $password);  // Storing password as plain text
 
-    $msg = "<p style='color: green'>Signup successful. <a href='login.html'>Login here</a></p>";
-}catch(mysqli_sql_exception $e) {
-
-    //checks for duplicates
-    if(strpos($e->getMessage(), 'Duplicate entry') !== false) {
-        $msg = "<p style='color: red'>username or email already exists.</p>";
-    }
+if ($stmt->execute()) {
+    // Successfully created the user
+    $msg = "Signup successful. You can now <a href='login.html'>login</a>.";
+} else {
+    // Error: Failed to create user
+    $msg = "Error: Could not create the account. Please try again.";
 }
 
-$conn->close();
-
-//redirects user to same page
-header("Location: signup.html?msg=". urlencode($msg));
+// Redirect user with the message
+header("Location: signup.html?msg=" . urlencode($msg));
 exit();
 ?>
