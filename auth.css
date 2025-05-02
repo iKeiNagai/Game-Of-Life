@@ -24,7 +24,13 @@ header h1 {
     color: #212121;
 }
 
+h2 {
+    color: #424242;
+    margin-bottom: 20px;
+}
+
 input[type="text"],
+input[type="email"],
 input[type="password"] {
     width: 90%;
     padding: 10px;
@@ -48,16 +54,6 @@ button {
 
 button:hover {
     background-color: #616161;
-}
-
-#msg {
-    margin-top: 15px;
-    color: #867474;
-    background-color: #fbe9e7;
-    border: 1px solid #ef9a9a;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: bold;
 }
 
 .back-link {

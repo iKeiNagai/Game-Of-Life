@@ -2,9 +2,6 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
   height: 100vh;
   background-color: #f4f4f4;
 }
@@ -19,6 +16,7 @@ body {
 
 #gamecontainer {
   display: flex;
+  justify-content: center;
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -76,3 +74,37 @@ button:hover {
   transform: scale(1.05);
 }
 
+.navbar {
+  width: 100%;
+  background-color: #424242;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar span {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.navbar button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  background-color: #757575;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar button:hover {
+  background-color: #616161;
+}
