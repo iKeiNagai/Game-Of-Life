@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 
-$sql = "SELECT COUNT(*) as games_played, SUM(generations) as total_generations FROM game_sessions WHERE user_id = ?";
+$sql = "SELECT COUNT(*) as games_played, SUM(generation_count) as total_generations FROM game_sessions WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id); 
 $stmt->execute();
@@ -29,14 +29,23 @@ $total_generations = $stats['total_generations'] ?? 0;
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
+    <div class="navbar">
+        <span><?php echo "Role: " . $_SESSION['role']; ?></span>
+        <?php if($_SESSION['role'] === 'admin') : ?>
+        <button onclick="window.location.href='admin.php'">Manage Users</button>
+        <?php endif; ?>
+        <button onclick="window.location.href='dashboard.php'">Dashboard</button>
+        <button onclick="window.location.href='game.php'">Game</button>
+        <button onclick="window.location.href='change_role.php'">Change role</button>
+        <button onclick="window.location.href='logout.php'">Logout</button>
+    </div>
+
     <h2>Welcome, <?= htmlspecialchars($username) ?>!</h2>
 
     <div class="dashboard">
         <p><strong>Games Played:</strong> <?= $games_played ?></p>
         <p><strong>Total Generations:</strong> <?= $total_generations ?></p>
 
-        <a href="game.html"><button>▶️ Play Game</button></a>
-        <a href="logout.php"><button>🚪 Logout</button></a>
     </div>
 </body>
 </html>

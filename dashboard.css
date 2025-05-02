@@ -29,7 +29,7 @@ h2 {
 }
 
 button {
-    background-color: #3498db;
+    background-color: #757575;
     border: none;
     color: white;
     padding: 12px 20px;
@@ -41,7 +41,7 @@ button {
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #616161;
 }
 
 a {
@@ -63,3 +63,38 @@ a {
         margin: 10px 0;
     }
 }
+
+.navbar {
+    width: 100%;
+    background-color: #424242;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .navbar span {
+    font-weight: bold;
+    margin-right: 20px;
+  }
+  
+  .navbar button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    background-color: #757575;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar button:hover {
+    background-color: #616161;
+  }
