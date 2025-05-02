@@ -1,10 +1,37 @@
 <?php
 session_start();
+require_once 'db.php';
 
 //check if valid session
 if (!isset($_SESSION['user_id'])) {
   header("Location: login.php");
   exit();
+}
+
+//handles post request
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+  $data = json_decode(file_get_contents("php://input"), true); //handles raw data to arr
+  if (!$data) exit();
+
+  //debug
+  header('Content-Type: application/json');
+  echo json_encode(['received' => $data]);
+
+  //prepare statement
+  $sql = "INSERT INTO game_sessions (pattern_name, status, generation_count, created_at, ended_at, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+  $statement = $conn->prepare($sql);
+  $statement->bind_param("ssissi",
+    $data['pattern_name'],
+    $data['status'],
+    $data['generation_count'],
+    $data['created_at'],
+    $data['ended_at'],
+    $_SESSION['user_id']
+  );
+
+  $statement->execute();
+  exit();
+
 }
 ?>
 
@@ -28,6 +55,7 @@ if (!isset($_SESSION['user_id'])) {
       <button onclick="nextGeneration()">Next Generation</button>
       <button onclick="fastForward(23)"> +23 Generations</button>
       <button onclick="resetGrid()">Reset</button>
+      <button onclick="saveGame()">Save Result</button>
       <select id="patternSelect" onchange="loadPattern()">
         <option value="block"> Block</option>
         <option value="boat"> Boat</option>
