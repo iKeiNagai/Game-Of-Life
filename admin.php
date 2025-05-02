@@ -46,7 +46,51 @@ $users = mysqli_query($conn, $query);
                 <td><?= $user['game_count'] ?></td>
                 <td>Delete</td>
             </tr>
-        <?php endwhile; ?>
+            
+            <?php
+                $sql = "
+                    SELECT * FROM game_sessions 
+                    WHERE user_id = {$user['id']}";
+                $sessions = mysqli_query($conn,$sql);
+
+                if (mysqli_num_rows($sessions) > 0):
+                    while($session = mysqli_fetch_assoc($sessions)):
+            ?>
+            
+            <tr>
+                <td colspan="4"> 
+                    Pattern: <?= $session['pattern_name'] ?>
+                    Status: <?= $session['status'] ?>
+                    Gen: <?= $session['generation_count'] ?>
+                </td>
+                <td>
+                    Start:<span class="format-datetime" data-datetime="<?= $session['created_at'] ?>"></span><br> 
+                    End:<span class="format-datetime" data-datetime="<?= $session['ended_at'] ?>"></span>
+                </td>
+                <td>DELETE/UPDATE</td>
+            </tr>
+
+            <?php endwhile; endif;?>
+
+        <?php endwhile;?>
     </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const formatDates = document.querySelectorAll('.format-datetime');
+
+        formatDates.forEach(el => {
+            const raw = el.dataset.datetime;
+            const date = new Date(raw);
+
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const yy = String(date.getFullYear()).slice(2);
+            const hh = String(date.getHours()).padStart(2, '0');
+            const min = String(date.getMinutes()).padStart(2, '0');
+
+            el.textContent = `${mm}/${yy} ${hh}:${min}`;
+        });
+    });
+    </script>
 </body>
 </html>
