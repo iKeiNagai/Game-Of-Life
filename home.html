@@ -4,37 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomePage</title>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    
-    <button onclick="window.location.href='login.html'">Login</button>
-    <button onclick="window.location.href='signup.html'">signup</button>
+    <div class="container">
+        <header>
+            <h1>The Game of Life</h1>
+        </header>
 
-    <h2>Rules</h2>
-    
-    <ol>
-        <li>Underpopulation
-            <ul>
-                <li>A live cell with fewer than 2 live neighbors dies.</li>
-            </ul>
-        </li>
-        <li>Survival
-            <ul>
-                A live cell with 2 or 3 live neighbors lives on to the next generation.
-            </ul>
-        </li>
-        <li>Overpopulation
-            <ul>
-                <li>A live cell with more than 3 live neighbors dies.</li>
-            </ul>
-        </li>
-        <li>Reproduction
-            <ul>
-                <li>A dead cell with exactly 3 live neighbors becomes alive.</li>
-            </ul>
-        </li>
-    </ol>
-    <h3>Note:</h3><p>Neighbors include the 8 surrounding cells (horizontal, vertical, and diagonal).</p>
+        <button onclick="window.location.href='login.html'">Login</button>
+        <button onclick="window.location.href='signup.html'">Signup</button>
 
+        <h2>Rules</h2>
+
+        <ol>
+            <li>Underpopulation
+                <ul>
+                    <li>A live cell with fewer than 2 live neighbors dies.</li>
+                </ul>
+            </li>
+            <li>Survival
+                <ul>
+                    <li>A live cell with 2 or 3 live neighbors lives on to the next generation.</li>
+                </ul>
+            </li>
+            <li>Overpopulation
+                <ul>
+                    <li>A live cell with more than 3 live neighbors dies.</li>
+                </ul>
+            </li>
+            <li>Reproduction
+                <ul>
+                    <li>A dead cell with exactly 3 live neighbors becomes alive.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Note:</h3>
+        <p>Neighbors include the 8 surrounding cells (horizontal, vertical, and diagonal).</p>
+    </div>
 </body>
+
+
 </html>
