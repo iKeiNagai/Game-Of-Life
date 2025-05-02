@@ -29,6 +29,12 @@ if (isset($_POST['delete_session'])) {
     $sql = "DELETE FROM game_sessions WHERE id = $sessionId";
     mysqli_query($conn, $sql);
 }
+
+if (isset($_POST['update_pattern'])) {
+    $sessionId = (int)$_POST['session_id'];
+    $pattern = mysqli_real_escape_string($conn, $_POST['pattern_name']);
+    mysqli_query($conn, "UPDATE game_sessions SET pattern_name = '$pattern' WHERE id = $sessionId");
+}
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +88,8 @@ if (isset($_POST['delete_session'])) {
             
             <tr>
                 <td colspan="4"> 
-                    Pattern: <?= $session['pattern_name'] ?>
+                    Pattern: <span id="pattern-name-<?= $session['id'] ?>" > <?= $session['pattern_name'] ?></span>
+
                     Status: <?= $session['status'] ?>
                     Gen: <?= $session['generation_count'] ?>
                 </td>
@@ -94,7 +101,14 @@ if (isset($_POST['delete_session'])) {
                     <form method="POST">
                         <input type="hidden" name="session_id" value="<?= $session['id'] ?>">
                         <button name="delete_session" onclick="return confirm('Delete session?')">Delete</button>
-                    </form>  
+                    </form>
+
+                    <button onclick="updatePattern(<?= $session['id'] ?>)">Update</button>
+                    <form id="update-form-<?= $session['id'] ?>" method="POST" style="display:none;">
+                        <input type="hidden" name="session_id" value="<?= $session['id'] ?>">
+                        <input type="hidden" name="pattern_name" id="pattern-input-<?= $session['id'] ?>">
+                        <input type="hidden" name="update_pattern" value="1">
+                    </form>
                 </td>
             </tr>
 
@@ -119,6 +133,16 @@ if (isset($_POST['delete_session'])) {
             el.textContent = `${mm}/${yy} ${hh}:${min}`;
         });
     });
+
+    function updatePattern(sessionId) {
+        const span = document.getElementById('pattern-name-' + sessionId);
+        const current = span.innerText;
+        const newPattern = prompt("Enter new pattern name:", current);
+        if (newPattern !== null && newPattern.trim() !== "") {
+            document.getElementById('pattern-input-' + sessionId).value = newPattern;
+            document.getElementById('update-form-' + sessionId).submit();
+        }
+    }
     </script>
 </body>
 </html>
