@@ -22,6 +22,13 @@ if(isset($_POST['delete_user'])){
     $sql = "DELETE FROM users WHERE id = $userId";
     mysqli_query($conn, $sql);
 }
+
+//delete session
+if (isset($_POST['delete_session'])) {
+    $sessionId = (int)$_POST['session_id'];
+    $sql = "DELETE FROM game_sessions WHERE id = $sessionId";
+    mysqli_query($conn, $sql);
+}
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +90,12 @@ if(isset($_POST['delete_user'])){
                     Start:<span class="format-datetime" data-datetime="<?= $session['created_at'] ?>"></span><br> 
                     End:<span class="format-datetime" data-datetime="<?= $session['ended_at'] ?>"></span>
                 </td>
-                <td>DELETE/UPDATE</td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="session_id" value="<?= $session['id'] ?>">
+                        <button name="delete_session" onclick="return confirm('Delete session?')">Delete</button>
+                    </form>  
+                </td>
             </tr>
 
             <?php endwhile; endif;?>
