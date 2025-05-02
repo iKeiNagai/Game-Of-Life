@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db.php'; // Connect to DB
+require_once 'db.php'; 
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -10,12 +10,11 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 
-// Fetch user session stats from DB using mysqli
 $stmt = $conn->prepare("SELECT COUNT(*) as games_played, SUM(generations) as total_generations FROM game_sessions WHERE user_id = ?");
-$stmt->bind_param("i", $user_id); // Bind the parameter
+$stmt->bind_param("i", $user_id); 
 $stmt->execute();
-$result = $stmt->get_result(); // Get the result
-$stats = $result->fetch_assoc(); // Fetch data as associative array
+$result = $stmt->get_result(); 
+$stats = $result->fetch_assoc(); 
 
 $games_played = $stats['games_played'] ?? 0;
 $total_generations = $stats['total_generations'] ?? 0;

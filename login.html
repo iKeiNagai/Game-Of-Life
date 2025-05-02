@@ -15,7 +15,6 @@
     </form>
 
     <script>
-        //validate form
         function validate(){
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value.trim();
@@ -28,7 +27,6 @@
             return true;
         }
 
-        //checks for msg from php
         window.onload = function(){
             const urlParams = new URLSearchParams(window.location.search);
             const msg = urlParams.get("msg");
