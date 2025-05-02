@@ -46,8 +46,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </head>
 <body>
   <div>
+    <?php
+      echo "Role: " . $_SESSION['role'];
+    ?>
     <button onclick="window.location.href='dashboard.php'">Dashboard</button>
     <button onclick="window.location.href='game.php'">Game</button>
+    <button onclick="window.location.href='change_role.php'">Change role</button>
     <button onclick="window.location.href='logout.php'">Logout</button>
   </div>
   <div id="gamecontainer">
