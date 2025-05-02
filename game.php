@@ -45,6 +45,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   
 </head>
 <body>
+  <div>
+    <button onclick="window.location.href='dashboard.php'">Dashboard</button>
+    <button onclick="window.location.href='game.php'">Game</button>
+    <button onclick="window.location.href='logout.php'">Logout</button>
+  </div>
   <div id="gamecontainer">
     <div id="grid-container"></div>
     <div class="box">
